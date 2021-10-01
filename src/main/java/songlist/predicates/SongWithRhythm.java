@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class SongWithRhythm implements Specification<Song> {
 
-    private String rhythmId;
+    private final String rhythmId;
 
     public SongWithRhythm(String rhythmId) {
         this.rhythmId = rhythmId;
