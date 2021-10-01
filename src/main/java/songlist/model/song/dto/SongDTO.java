@@ -1,30 +1,19 @@
 package songlist.model.song.dto;
 
+import lombok.Data;
+
+@Data
 public class SongDTO {
 
     private String id;
     private String name;
     private String rhythmName;
+    private String comments;
 
-    public SongDTO(String id, String name, String rhythmName) {
+    public SongDTO(String id, String name, String rhythmName, String comments) {
         this.id = id;
         this.name = name;
         this.rhythmName = rhythmName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getRhythm() {
-        return rhythmName;
-    }
-
-    public void setRhythm(String rhythm) {
-        this.rhythmName = rhythm;
+        this.comments = comments;
     }
 }

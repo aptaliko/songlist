@@ -28,19 +28,19 @@ public class SongService {
     }
 
     public List<SongDTO> getAllSongs() {
-        return songRepository.findAll().stream().map(s -> new SongDTO(s.getId().toString(), s.getName(), s.getRhythm().getName())).collect(Collectors.toList());
+        return songRepository.findAll().stream().map(s -> new SongDTO(s.getId().toString(), s.getName(), s.getRhythm().getName(), s.getComments())).collect(Collectors.toList());
     }
 
     public List<SongDTO> getSongsOfCriteria(SongSearchCriteria criteria) {
         Specification<Song> activeSongs = Specification.where(new SongWithRhythm(criteria.getRhythmId()));
 
-        return songRepository.findAll(activeSongs).stream().map(s -> new SongDTO(s.getId().toString(), s.getName(), s.getRhythm().getName())).collect(Collectors.toList());
+        return songRepository.findAll(activeSongs).stream().map(s -> new SongDTO(s.getId().toString(), s.getName(), s.getRhythm().getName(), s.getComments())).collect(Collectors.toList());
     }
 
     public SongDTO getSong(UUID id) {
         Song song = songRepository.getOne(id);
 
-        return new SongDTO(song.getId().toString(), song.getName(), song.getRhythm().getName());
+        return new SongDTO(song.getId().toString(), song.getName(), song.getRhythm().getName(), song.getComments());
     }
 
     public Optional<UUID> createSong(NewSongDTO newSongDTO) throws Exception {
@@ -51,6 +51,7 @@ public class SongService {
 
         Song song = new Song();
         song.setName(newSongDTO.getName());
+        song.setComments(newSongDTO.getComments());
 
         if (rhythm.isEmpty()) {
             throw new Exception("Rhythm with id " + newSongDTO.getRhythmId() + " does not exist.");

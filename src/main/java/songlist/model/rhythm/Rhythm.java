@@ -1,11 +1,13 @@
 package songlist.model.rhythm;
 
+import lombok.Data;
 import songlist.model.song.Song;
 
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
 
+@Data
 @Entity
 public class Rhythm {
 
@@ -23,27 +25,4 @@ public class Rhythm {
     @OneToMany(mappedBy = "rhythm")
     private Set<Song> songs;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getMeter() {
-        return meter;
-    }
-
-    public void setMeter(String meter) {
-        this.meter = meter;
-    }
 }

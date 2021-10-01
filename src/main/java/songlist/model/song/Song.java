@@ -1,10 +1,12 @@
 package songlist.model.song;
 
+import lombok.Data;
 import songlist.model.rhythm.Rhythm;
 
 import javax.persistence.*;
 import java.util.UUID;
 
+@Data
 @Entity
 public class Song {
 
@@ -17,26 +19,10 @@ public class Song {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name="rhythm_id", nullable = false)
+    @JoinColumn(name="rhythm_id")
     private Rhythm rhythm;
 
-    public String getName() {
-        return name;
-    }
+    @Column
+    private String comments;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Rhythm getRhythm() {
-        return rhythm;
-    }
-
-    public void setRhythm(Rhythm rhythm) {
-        this.rhythm = rhythm;
-    }
 }
