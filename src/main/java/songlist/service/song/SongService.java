@@ -2,17 +2,12 @@ package songlist.service.song;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import songlist.model.features.dance.Dance;
-import songlist.model.features.mode.Mode;
-import songlist.model.features.rhythm.Rhythm;
+import songlist.Exceptions.ValidationException;
 import songlist.model.song.Song;
 import songlist.model.song.dto.NewSongDTO;
 import songlist.model.song.dto.SongDTO;
 import songlist.model.song.dto.SongSearchCriteria;
 import songlist.predicates.SongWithRhythm;
-import songlist.repository.dance.DanceRepository;
-import songlist.repository.mode.ModeRepository;
-import songlist.repository.rhythm.RhythmRepository;
 import songlist.repository.song.SongRepository;
 
 import java.util.List;
@@ -24,13 +19,11 @@ import java.util.stream.Collectors;
 public class SongService {
 
     SongRepository songRepository;
-    RhythmRepository rhythmRepository;
-    DanceRepository danceRepository;
-    ModeRepository modeRepository;
+    SongValidationService songValidationService;
 
-    public SongService(SongRepository songRepository, RhythmRepository rhythmRepository, DanceRepository danceRepository, ModeRepository modeRepository) {
+    public SongService(SongRepository songRepository, SongValidationService songValidationService) {
         this.songRepository = songRepository;
-        this.rhythmRepository = rhythmRepository;
+        this.songValidationService = songValidationService;
     }
 
     public List<SongDTO> getAllSongs() {
@@ -49,32 +42,11 @@ public class SongService {
         return new SongDTO(song.getId().toString(), song.getName(), song.getRhythm().getName(), song.getComments());
     }
 
-    public Optional<UUID> createSong(NewSongDTO newSongDTO) throws Exception {
+    public Optional<UUID> createSong(NewSongDTO newSongDTO) throws ValidationException {
         if (newSongDTO == null) {
             return Optional.empty();
         }
-
-        Song song = new Song();
-        song.setName(newSongDTO.getName());
-        song.setComments(newSongDTO.getComments());
-
-        Optional<Rhythm> rhythm = rhythmRepository.findById(UUID.fromString(newSongDTO.getRhythmId()));
-        if (rhythm.isEmpty()) {
-            throw new Exception("Rhythm with id " + newSongDTO.getRhythmId() + " does not exist.");
-        }
-        song.setRhythm(rhythm.get());
-
-        Optional<Dance> dance = danceRepository.findById(UUID.fromString(newSongDTO.getDanceId()));
-        if (dance.isEmpty()) {
-            throw new Exception("Dance with id " + newSongDTO.getDanceId() + " does not exist.");
-        }
-        song.setDance(dance.get());
-
-        Optional<Mode> mode = modeRepository.findById(UUID.fromString(newSongDTO.getModeId()));
-        if (mode.isEmpty()) {
-            throw new Exception("Mode with id " + newSongDTO.getModeId() + " does not exist.");
-        }
-        song.setMode(mode.get());
+        Song song = songValidationService.validateSong(newSongDTO);
 
         return Optional.of(songRepository.save(song).getId());
     }
