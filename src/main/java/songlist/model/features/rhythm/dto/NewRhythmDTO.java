@@ -1,4 +1,4 @@
-package songlist.model.rhythm.dto;
+package songlist.model.features.rhythm.dto;
 
 public class NewRhythmDTO {
 

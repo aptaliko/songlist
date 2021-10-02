@@ -2,6 +2,7 @@ TODO LIST
 1. Create delete and update functions
 2. Check how the database is not deleted
 3. Create other characteristics
+   1. Region (3 levels)
 4. Add validations on New DTOs and deny wrong format of json objects
 5. Pagination at search endpoint
 

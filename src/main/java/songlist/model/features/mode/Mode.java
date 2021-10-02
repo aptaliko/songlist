@@ -1,15 +1,16 @@
-package songlist.model.rhythm;
+package songlist.model.features.mode;
 
 import lombok.Data;
-import songlist.model.song.Song;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.UUID;
 
 @Data
 @Entity
-public class Rhythm {
+public class Mode {
 
     @Id
     @Column(length = 16, unique = true, nullable = false)
@@ -18,11 +19,4 @@ public class Rhythm {
 
     @Column(length = 16, unique = true, nullable = false)
     private String name;
-
-    @Column
-    private String meter;
-
-    @OneToMany(mappedBy = "rhythm")
-    private Set<Song> songs;
-
 }

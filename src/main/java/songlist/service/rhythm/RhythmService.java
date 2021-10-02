@@ -1,9 +1,9 @@
 package songlist.service.rhythm;
 
 import org.springframework.stereotype.Service;
-import songlist.model.rhythm.Rhythm;
-import songlist.model.rhythm.dto.NewRhythmDTO;
-import songlist.model.rhythm.dto.RhythmDTO;
+import songlist.model.features.rhythm.Rhythm;
+import songlist.model.features.rhythm.dto.NewRhythmDTO;
+import songlist.model.features.rhythm.dto.RhythmDTO;
 import songlist.repository.rhythm.RhythmRepository;
 
 import java.util.List;
@@ -20,17 +20,17 @@ public class RhythmService {
         this.rhythmRepository = rhythmRepository;
     }
 
-    public List<RhythmDTO> getAllRhythms() {
+    public List<RhythmDTO> getAll() {
         return rhythmRepository.findAll().stream().map(s -> new RhythmDTO(s.getId().toString(), s.getName(), s.getMeter())).collect(Collectors.toList());
     }
 
-    public RhythmDTO getRhythm(UUID id) {
+    public RhythmDTO get(UUID id) {
         Rhythm rhythm = rhythmRepository.getOne(id);
 
         return new RhythmDTO(rhythm.getId().toString(), rhythm.getName(), rhythm.getMeter());
     }
 
-    public Optional<UUID> createRhythm(NewRhythmDTO newRhythmDTO) {
+    public Optional<UUID> create(NewRhythmDTO newRhythmDTO) {
 
         if (newRhythmDTO == null) {
             return Optional.empty();

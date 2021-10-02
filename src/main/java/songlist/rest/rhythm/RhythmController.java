@@ -3,8 +3,8 @@ package songlist.rest.rhythm;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import songlist.model.rhythm.dto.NewRhythmDTO;
-import songlist.model.rhythm.dto.RhythmDTO;
+import songlist.model.features.rhythm.dto.NewRhythmDTO;
+import songlist.model.features.rhythm.dto.RhythmDTO;
 import songlist.service.rhythm.RhythmService;
 
 import java.util.List;
@@ -22,17 +22,17 @@ public class RhythmController {
 
     @GetMapping(value = "/")
     public List<RhythmDTO> getAllRhythms() {
-        return rhythmService.getAllRhythms();
+        return rhythmService.getAll();
     }
 
     @GetMapping(value = "/{id}")
     public RhythmDTO getRhythm(@PathVariable UUID id) {
-        return rhythmService.getRhythm(id);
+        return rhythmService.get(id);
     }
 
     @PostMapping()
     public ResponseEntity<UUID> createRhythm(@Validated @RequestBody NewRhythmDTO newRhythmDTO) {
-        return ResponseEntity.of(rhythmService.createRhythm(newRhythmDTO));
+        return ResponseEntity.of(rhythmService.create(newRhythmDTO));
     }
 
 }
