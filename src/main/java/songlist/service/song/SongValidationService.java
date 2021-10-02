@@ -30,6 +30,10 @@ public class SongValidationService {
     }
 
     public Song validateSong (NewSongDTO newSongDTO) throws ValidationException {
+        if (newSongDTO == null) {
+            throw new ValidationException("Request body" + DOES_NOT_EXIST);
+        }
+
         Song song = new Song();
         song.setName(newSongDTO.getName());
         song.setComments(newSongDTO.getComments());

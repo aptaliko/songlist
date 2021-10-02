@@ -38,9 +38,9 @@ public class SongController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity createSong(@RequestBody NewSongDTO newSongDTO) {
+    public ResponseEntity<String> createSong(@RequestBody NewSongDTO newSongDTO) {
         try {
-            return ResponseEntity.of(songService.createSong(newSongDTO));
+            return ResponseEntity.status(HttpStatus.CREATED).body(songService.createSong(newSongDTO));
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

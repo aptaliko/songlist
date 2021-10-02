@@ -42,13 +42,10 @@ public class SongService {
         return new SongDTO(song.getId().toString(), song.getName(), song.getRhythm().getName(), song.getComments());
     }
 
-    public Optional<UUID> createSong(NewSongDTO newSongDTO) throws ValidationException {
-        if (newSongDTO == null) {
-            return Optional.empty();
-        }
+    public String createSong(NewSongDTO newSongDTO) throws ValidationException {
         Song song = songValidationService.validateSong(newSongDTO);
 
-        return Optional.of(songRepository.save(song).getId());
+        return songRepository.save(song).getId().toString();
     }
 }
 
