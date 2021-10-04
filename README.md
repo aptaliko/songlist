@@ -1,5 +1,6 @@
 TODO LIST
-1. Create delete and update functions
+1. Create update functions
+2. ON DELETE -> set NULL
 3. Check how the database is not deleted
 4. Create other characteristics
    1. Region (3 levels)

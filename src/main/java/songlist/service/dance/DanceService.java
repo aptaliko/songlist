@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import songlist.model.features.dance.Dance;
 import songlist.model.features.dance.dto.DanceDTO;
 import songlist.model.features.dance.dto.NewDanceDTO;
+import songlist.model.song.Song;
 import songlist.repository.dance.DanceRepository;
 
 import java.util.List;
@@ -39,5 +40,13 @@ public class DanceService {
         dance.setName(newDanceDTO.getName());
 
         return Optional.of(danceRepository.save(dance).getId());
+    }
+
+    public void delete(String id) {
+//        Optional<Dance> d = danceRepository.findById(UUID.fromString(id));
+//        for (Song s : d.get().getSongs()) {
+//            s.setDance(null);
+//        }
+        danceRepository.deleteById(UUID.fromString(id));
     }
 }

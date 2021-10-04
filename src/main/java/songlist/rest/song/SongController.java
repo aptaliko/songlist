@@ -40,6 +40,11 @@ public class SongController {
         return songService.getDTO(id);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public void deleteSong(@PathVariable String id) {
+        songService.delete(id);
+    }
+
     @PostMapping(value = "/")
     public ResponseEntity<String> createSong(@Valid @NotNull @RequestBody NewSongDTO newSongDTO) {
         try {

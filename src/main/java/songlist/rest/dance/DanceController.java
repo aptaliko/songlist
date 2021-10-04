@@ -38,4 +38,8 @@ public class DanceController {
         return ResponseEntity.of(danceService.create(newDanceDTO));
     }
 
+    @DeleteMapping(value = "/{id}")
+    public void deleteDance(@PathVariable String id) {
+        danceService.delete(id);
+    }
 }

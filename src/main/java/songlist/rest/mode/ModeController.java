@@ -24,18 +24,22 @@ public class ModeController {
     }
 
     @GetMapping(value = "/")
-    public List<ModeDTO> getAllRhythms() {
+    public List<ModeDTO> getAllModes() {
         return modeService.getAll();
     }
 
     @GetMapping(value = "/{id}")
-    public ModeDTO getRhythm(@PathVariable String id) {
+    public ModeDTO getMode(@PathVariable String id) {
         return modeService.getDTO(id);
     }
 
     @PostMapping()
-    public ResponseEntity<UUID> createRhythm(@Valid @NotNull @RequestBody NewModeDTO newModeDTO) {
+    public ResponseEntity<UUID> createMode(@Valid @NotNull @RequestBody NewModeDTO newModeDTO) {
         return ResponseEntity.of(modeService.create(newModeDTO));
     }
 
+    @DeleteMapping(value = "/{id}")
+    public void deleteMode(@PathVariable String id) {
+        modeService.delete(id);
+    }
 }

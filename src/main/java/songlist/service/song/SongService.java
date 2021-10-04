@@ -52,5 +52,9 @@ public class SongService {
 
         return songRepository.save(song).getId().toString();
     }
+
+    public void delete(String id) {
+        songRepository.deleteById(UUID.fromString(id));
+    }
 }
 

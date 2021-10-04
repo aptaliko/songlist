@@ -40,4 +40,8 @@ public class RhythmService {
 
         return Optional.of(rhythmRepository.save(rhythm).getId());
     }
+
+    public void delete(String id) {
+        rhythmRepository.deleteById(UUID.fromString(id));
+    }
 }

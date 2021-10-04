@@ -40,4 +40,8 @@ public class ModeService {
 
         return Optional.of(modeRepository.save(mode).getId());
     }
+
+    public void delete(String id) {
+        modeRepository.deleteById(UUID.fromString(id));
+    }
 }

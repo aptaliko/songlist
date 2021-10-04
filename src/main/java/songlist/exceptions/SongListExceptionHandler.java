@@ -26,6 +26,4 @@ public class SongListExceptionHandler {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
-
-
 }

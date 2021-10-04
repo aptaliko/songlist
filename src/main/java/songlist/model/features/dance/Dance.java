@@ -4,6 +4,7 @@ import lombok.Data;
 import songlist.model.song.Song;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,5 +21,10 @@ public class Dance {
     private String name;
 
     @OneToMany(mappedBy = "dance")
-    private Set<Song> songs;
+    private Set<Song> songs = new HashSet<>();
+
+//    @PreRemove
+//    private void preRemove() {
+//        songs.forEach( child -> child.setDance(null));
+//    }
 }

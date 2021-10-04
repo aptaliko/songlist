@@ -33,6 +33,11 @@ public class RhythmController {
         return rhythmService.getDTO(id);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public void deleteSong(@PathVariable String id) {
+        rhythmService.delete(id);
+    }
+
     @PostMapping()
     public ResponseEntity<UUID> createRhythm(@Valid @NotNull @RequestBody NewRhythmDTO newRhythmDTO) {
         return ResponseEntity.of(rhythmService.create(newRhythmDTO));
