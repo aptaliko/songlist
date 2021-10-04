@@ -24,8 +24,12 @@ public class DanceService {
         return danceRepository.findAll().stream().map(s -> new DanceDTO(s.getId().toString(), s.getName())).collect(Collectors.toList());
     }
 
-    public DanceDTO get(UUID id) {
-        Dance dance = danceRepository.getOne(id);
+    public Dance get(String id) {
+        return danceRepository.getOne(UUID.fromString(id));
+    }
+
+    public DanceDTO getDTO(String id) {
+        Dance dance = this.get(id);
 
         return new DanceDTO(dance.getId().toString(), dance.getName());
     }

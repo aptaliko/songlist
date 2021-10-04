@@ -1,7 +1,6 @@
 package songlist.rest.dance;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import songlist.model.features.dance.dto.DanceDTO;
 import songlist.model.features.dance.dto.NewDanceDTO;
@@ -21,17 +20,17 @@ public class DanceController {
     }
 
     @GetMapping(value = "/")
-    public List<DanceDTO> getAllRhythms() {
+    public List<DanceDTO> getAllDances() {
         return danceService.getAll();
     }
 
     @GetMapping(value = "/{id}")
-    public DanceDTO getRhythm(@PathVariable UUID id) {
-        return danceService.get(id);
+    public DanceDTO getDance(@PathVariable String id) {
+        return danceService.getDTO(id);
     }
 
     @PostMapping()
-    public ResponseEntity<UUID> createRhythm(@Validated @RequestBody NewDanceDTO newDanceDTO) {
+    public ResponseEntity<UUID> createDance(@RequestBody NewDanceDTO newDanceDTO) {
         return ResponseEntity.of(danceService.create(newDanceDTO));
     }
 

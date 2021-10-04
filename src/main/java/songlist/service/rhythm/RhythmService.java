@@ -24,10 +24,13 @@ public class RhythmService {
         return rhythmRepository.findAll().stream().map(s -> new RhythmDTO(s.getId().toString(), s.getName(), s.getMeter())).collect(Collectors.toList());
     }
 
-    public RhythmDTO get(UUID id) {
-        Rhythm rhythm = rhythmRepository.getOne(id);
-
+    public RhythmDTO getDTO(String id) {
+        Rhythm rhythm = this.get(id);
         return new RhythmDTO(rhythm.getId().toString(), rhythm.getName(), rhythm.getMeter());
+    }
+
+    public Rhythm get(String id) {
+        return rhythmRepository.getOne(UUID.fromString(id));
     }
 
     public Optional<UUID> create(NewRhythmDTO newRhythmDTO) {

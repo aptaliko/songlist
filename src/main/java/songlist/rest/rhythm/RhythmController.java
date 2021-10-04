@@ -1,7 +1,6 @@
 package songlist.rest.rhythm;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import songlist.model.features.rhythm.dto.NewRhythmDTO;
 import songlist.model.features.rhythm.dto.RhythmDTO;
@@ -26,12 +25,12 @@ public class RhythmController {
     }
 
     @GetMapping(value = "/{id}")
-    public RhythmDTO getRhythm(@PathVariable UUID id) {
-        return rhythmService.get(id);
+    public RhythmDTO getRhythm(@PathVariable String id) {
+        return rhythmService.getDTO(id);
     }
 
     @PostMapping()
-    public ResponseEntity<UUID> createRhythm(@Validated @RequestBody NewRhythmDTO newRhythmDTO) {
+    public ResponseEntity<UUID> createRhythm(@RequestBody NewRhythmDTO newRhythmDTO) {
         return ResponseEntity.of(rhythmService.create(newRhythmDTO));
     }
 

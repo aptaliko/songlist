@@ -24,8 +24,12 @@ public class ModeService {
         return modeRepository.findAll().stream().map(s -> new ModeDTO(s.getId().toString(), s.getName())).collect(Collectors.toList());
     }
 
-    public ModeDTO get(UUID id) {
-        Mode mode = modeRepository.getOne(id);
+    public Mode get(String id) {
+        return modeRepository.getOne(UUID.fromString(id));
+    }
+
+    public ModeDTO getDTO(String id) {
+        Mode mode = this.get(id);
 
         return new ModeDTO(mode.getId().toString(), mode.getName());
     }
