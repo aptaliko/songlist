@@ -4,7 +4,7 @@ TODO LIST
 3. Check how the database is not deleted
 4. Create other characteristics
    1. Region (3 levels)
-5. Deny wrong format of json objects
+5. Deny wrong format of json objects -> Handle validation exceptions correctly and check annotations on all entities
 6. Pagination at search endpoint
 
 

@@ -24,21 +24,17 @@ public class ModeService {
         return modeRepository.findAll().stream().map(s -> new ModeDTO(s.getId().toString(), s.getName())).collect(Collectors.toList());
     }
 
-    public Mode get(String id) {
-        return modeRepository.getOne(UUID.fromString(id));
+    public Optional<Mode> get(String id) {
+        return modeRepository.findById(UUID.fromString(id));
     }
 
     public ModeDTO getDTO(String id) {
-        Mode mode = this.get(id);
+        Mode mode = modeRepository.getOne(UUID.fromString(id));
 
         return new ModeDTO(mode.getId().toString(), mode.getName());
     }
 
     public Optional<UUID> create(NewModeDTO newModeDTO) {
-
-        if (newModeDTO == null) {
-            return Optional.empty();
-        }
         Mode mode = new Mode();
         mode.setName(newModeDTO.getName());
 

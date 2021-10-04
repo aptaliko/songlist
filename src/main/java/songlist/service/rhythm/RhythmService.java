@@ -25,19 +25,15 @@ public class RhythmService {
     }
 
     public RhythmDTO getDTO(String id) {
-        Rhythm rhythm = this.get(id);
+        Rhythm rhythm = rhythmRepository.getOne(UUID.fromString(id));
         return new RhythmDTO(rhythm.getId().toString(), rhythm.getName(), rhythm.getMeter());
     }
 
-    public Rhythm get(String id) {
-        return rhythmRepository.getOne(UUID.fromString(id));
+    public Optional<Rhythm> get(String id) {
+        return rhythmRepository.findById(UUID.fromString(id));
     }
 
     public Optional<UUID> create(NewRhythmDTO newRhythmDTO) {
-
-        if (newRhythmDTO == null) {
-            return Optional.empty();
-        }
         Rhythm rhythm = new Rhythm();
         rhythm.setName(newRhythmDTO.getName());
         rhythm.setMeter(newRhythmDTO.getMeter());

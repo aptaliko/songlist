@@ -24,21 +24,17 @@ public class DanceService {
         return danceRepository.findAll().stream().map(s -> new DanceDTO(s.getId().toString(), s.getName())).collect(Collectors.toList());
     }
 
-    public Dance get(String id) {
-        return danceRepository.getOne(UUID.fromString(id));
+    public Optional<Dance> get(String id) {
+        return danceRepository.findById(UUID.fromString(id));
     }
 
     public DanceDTO getDTO(String id) {
-        Dance dance = this.get(id);
+        Dance dance = danceRepository.getOne(UUID.fromString(id));
 
         return new DanceDTO(dance.getId().toString(), dance.getName());
     }
 
     public Optional<UUID> create(NewDanceDTO newDanceDTO) {
-
-        if (newDanceDTO == null) {
-            return Optional.empty();
-        }
         Dance dance = new Dance();
         dance.setName(newDanceDTO.getName());
 

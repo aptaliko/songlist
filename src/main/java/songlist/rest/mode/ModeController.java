@@ -1,16 +1,20 @@
 package songlist.rest.mode;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import songlist.model.features.mode.dto.ModeDTO;
 import songlist.model.features.mode.dto.NewModeDTO;
 import songlist.service.mode.ModeService;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/modes")
+@Validated
 public class ModeController {
 
     ModeService modeService;
@@ -30,7 +34,7 @@ public class ModeController {
     }
 
     @PostMapping()
-    public ResponseEntity<UUID> createRhythm(@RequestBody NewModeDTO newModeDTO) {
+    public ResponseEntity<UUID> createRhythm(@Valid @NotNull @RequestBody NewModeDTO newModeDTO) {
         return ResponseEntity.of(modeService.create(newModeDTO));
     }
 

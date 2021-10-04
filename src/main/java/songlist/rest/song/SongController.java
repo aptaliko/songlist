@@ -2,16 +2,21 @@ package songlist.rest.song;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import songlist.exceptions.ValidationException;
 import songlist.model.song.dto.NewSongDTO;
 import songlist.model.song.dto.SongDTO;
 import songlist.model.song.dto.SongSearchCriteria;
 import songlist.service.song.SongService;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
 @RequestMapping("/songs")
+@Validated
 public class SongController {
 
     SongService songService;
@@ -36,8 +41,12 @@ public class SongController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<String> createSong(@RequestBody NewSongDTO newSongDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(songService.create(newSongDTO));
+    public ResponseEntity<String> createSong(@Valid @NotNull @RequestBody NewSongDTO newSongDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(songService.create(newSongDTO));
+        } catch (ValidationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
 

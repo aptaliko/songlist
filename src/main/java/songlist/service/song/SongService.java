@@ -2,6 +2,7 @@ package songlist.service.song;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import songlist.exceptions.ValidationException;
 import songlist.model.song.Song;
 import songlist.model.song.dto.NewSongDTO;
 import songlist.model.song.dto.SongDTO;
@@ -40,8 +41,8 @@ public class SongService {
         return new SongDTO(song.getId().toString(), song.getName(), song.getRhythm().getName(), song.getComments());
     }
 
-    public String create(NewSongDTO newSongDTO) {
-        Song song = songBuilderService.build(newSongDTO);
+    public String create(NewSongDTO newSongDTO) throws ValidationException {
+        Song song = songBuilderService.validateAndBuild(newSongDTO);
 
         return songRepository.save(song).getId().toString();
     }
