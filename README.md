@@ -1,6 +1,5 @@
 TODO LIST
 1. Create delete and update functions
-2. Create predicates for new features
 3. Check how the database is not deleted
 4. Create other characteristics
    1. Region (3 levels)

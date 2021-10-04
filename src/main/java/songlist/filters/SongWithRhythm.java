@@ -1,5 +1,6 @@
-package songlist.predicates;
+package songlist.filters;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 import songlist.model.song.Song;
 
@@ -18,7 +19,7 @@ public class SongWithRhythm implements Specification<Song> {
     }
 
     @Override
-    public Predicate toPredicate(Root<Song> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+    public Predicate toPredicate(@NotNull Root<Song> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
         if (this.rhythmId == null) {
             return builder.isTrue(builder.literal(true));
         }
