@@ -9,6 +9,7 @@ import songlist.repository.dance.DanceRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -43,10 +44,6 @@ public class DanceService {
     }
 
     public void delete(String id) {
-//        Optional<Dance> d = danceRepository.findById(UUID.fromString(id));
-//        for (Song s : d.get().getSongs()) {
-//            s.setDance(null);
-//        }
         danceRepository.deleteById(UUID.fromString(id));
     }
 }
