@@ -1,4 +1,4 @@
-package songlist.repository.features.mode;
+package songlist.repository.features;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

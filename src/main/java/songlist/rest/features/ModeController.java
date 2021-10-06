@@ -1,4 +1,4 @@
-package songlist.rest.features.mode;
+package songlist.rest.features;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.mode.dto.ModeDTO;
 import songlist.model.features.mode.dto.NewModeDTO;
-import songlist.service.features.mode.ModeService;
+import songlist.service.features.ModeService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package songlist.rest.features.dance;
+package songlist.rest.features;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.dance.dto.DanceDTO;
 import songlist.model.features.dance.dto.NewDanceDTO;
-import songlist.service.features.dance.DanceService;
+import songlist.service.features.DanceService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

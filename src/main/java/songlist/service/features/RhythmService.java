@@ -1,11 +1,11 @@
-package songlist.service.features.rhythm;
+package songlist.service.features;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.rhythm.Rhythm;
 import songlist.model.features.rhythm.dto.NewRhythmDTO;
 import songlist.model.features.rhythm.dto.RhythmDTO;
-import songlist.repository.features.rhythm.RhythmRepository;
+import songlist.repository.features.RhythmRepository;
 
 import java.util.List;
 import java.util.Optional;
