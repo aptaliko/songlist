@@ -14,6 +14,7 @@ import songlist.filters.SongWithRhythm;
 import songlist.repository.song.SongRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -48,13 +49,26 @@ public class SongService {
     }
 
     public String create(NewSongDTO newSongDTO) throws ValidationException {
-        Song song = songBuilderService.validateAndBuild(newSongDTO);
+        Song song = new Song();
+        songBuilderService.validateAndBuild(song, newSongDTO);
 
         return songRepository.save(song).getId().toString();
     }
 
     public void delete(String id) {
         songRepository.deleteById(UUID.fromString(id));
+    }
+
+    public String update(String id, NewSongDTO newSongDTO) throws ValidationException {
+        Optional<Song> song = songRepository.findById(UUID.fromString(id));
+
+        if (song.isEmpty()) {
+            throw new ValidationException("No song with id: " + id);
+        }
+        Song s = song.get();
+        songBuilderService.validateAndBuild(s, newSongDTO);
+
+        return songRepository.save(s).getId().toString();
     }
 }
 

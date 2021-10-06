@@ -1,6 +1,7 @@
 package songlist.service.mode;
 
 import org.springframework.stereotype.Service;
+import songlist.exceptions.ValidationException;
 import songlist.model.features.mode.Mode;
 import songlist.model.features.mode.dto.ModeDTO;
 import songlist.model.features.mode.dto.NewModeDTO;
@@ -43,5 +44,17 @@ public class ModeService {
 
     public void delete(String id) {
         modeRepository.deleteById(UUID.fromString(id));
+    }
+
+    public String update(String id, NewModeDTO newModeDTO) throws ValidationException {
+        Optional<Mode> mode = modeRepository.findById(UUID.fromString(id));
+
+        if (mode.isEmpty()) {
+            throw new ValidationException("No mode with id: " + id);
+        }
+        Mode m = mode.get();
+        m.setName(newModeDTO.getName());
+
+        return modeRepository.save(m).getId().toString();
     }
 }

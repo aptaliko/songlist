@@ -28,8 +28,7 @@ public class SongBuilderService {
         this.modeService = modeService;
     }
 
-    public Song validateAndBuild(NewSongDTO newSongDTO) throws ValidationException {
-        Song song = new Song();
+    public void validateAndBuild(Song song, NewSongDTO newSongDTO) throws ValidationException {
         song.setName(newSongDTO.getName());
         song.setComments(newSongDTO.getComments());
 
@@ -52,12 +51,10 @@ public class SongBuilderService {
         if (isNotNullOrEmpty(newSongDTO.getModeId())) {
             Optional<Mode> mode = modeService.get(newSongDTO.getModeId());
             if (mode.isEmpty()) {
-                throw new ValidationException("MOde with id" + newSongDTO.getModeId() + DOES_NOT_EXIST);
+                throw new ValidationException("Mode with id" + newSongDTO.getModeId() + DOES_NOT_EXIST);
             }
             song.setMode(mode.get());
         }
-
-        return song;
     }
 
     private static boolean isNotNullOrEmpty(String s) {

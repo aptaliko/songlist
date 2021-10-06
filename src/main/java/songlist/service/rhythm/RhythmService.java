@@ -1,6 +1,7 @@
 package songlist.service.rhythm;
 
 import org.springframework.stereotype.Service;
+import songlist.exceptions.ValidationException;
 import songlist.model.features.rhythm.Rhythm;
 import songlist.model.features.rhythm.dto.NewRhythmDTO;
 import songlist.model.features.rhythm.dto.RhythmDTO;
@@ -43,5 +44,18 @@ public class RhythmService {
 
     public void delete(String id) {
         rhythmRepository.deleteById(UUID.fromString(id));
+    }
+
+    public String update(String id, NewRhythmDTO newRhythmDTO) throws ValidationException {
+        Optional<Rhythm> rhythm = rhythmRepository.findById(UUID.fromString(id));
+
+        if (rhythm.isEmpty()) {
+            throw new ValidationException("No rhythm with id: " + id);
+        }
+        Rhythm r = rhythm.get();
+        r.setName(newRhythmDTO.getName());
+        r.setMeter(newRhythmDTO.getMeter());
+
+        return rhythmRepository.save(r).getId().toString();
     }
 }

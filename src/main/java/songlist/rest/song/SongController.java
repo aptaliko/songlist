@@ -41,6 +41,7 @@ public class SongController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @ResponseStatus(value= HttpStatus.ACCEPTED)
     public void deleteSong(@PathVariable String id) {
         songService.delete(id);
     }
@@ -49,6 +50,15 @@ public class SongController {
     public ResponseEntity<String> createSong(@Valid @NotNull @RequestBody NewSongDTO newSongDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(songService.create(newSongDTO));
+        } catch (ValidationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<String> updateSong(@PathVariable String id, @Valid @NotNull @RequestBody NewSongDTO newSongDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(songService.update(id, newSongDTO));
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

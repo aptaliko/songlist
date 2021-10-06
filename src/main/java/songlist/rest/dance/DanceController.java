@@ -1,8 +1,10 @@
 package songlist.rest.dance;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import songlist.exceptions.ValidationException;
 import songlist.model.features.dance.dto.DanceDTO;
 import songlist.model.features.dance.dto.NewDanceDTO;
 import songlist.service.dance.DanceService;
@@ -10,7 +12,6 @@ import songlist.service.dance.DanceService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/dances")
@@ -34,12 +35,21 @@ public class DanceController {
     }
 
     @PostMapping()
-    public ResponseEntity<UUID> createDance(@Valid @NotNull @RequestBody NewDanceDTO newDanceDTO) {
-        return ResponseEntity.of(danceService.create(newDanceDTO));
+    public ResponseEntity<String> createDance(@Valid @NotNull @RequestBody NewDanceDTO newDanceDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(danceService.create(newDanceDTO));
     }
 
     @DeleteMapping(value = "/{id}")
     public void deleteDance(@PathVariable String id) {
         danceService.delete(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<String> updateDance(@PathVariable String id, @Valid @NotNull @RequestBody NewDanceDTO newDanceDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(danceService.update(id, newDanceDTO));
+        } catch (ValidationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

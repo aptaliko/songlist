@@ -1,5 +1,6 @@
 package songlist.exceptions;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +13,13 @@ public class SongListExceptionHandler {
     @ExceptionHandler(value = {EntityNotFoundException.class})
     protected ResponseEntity<Object> handleNoEntityFound(RuntimeException ex) {
         String message = "Unable to find object with id: " + ex.getMessage().substring(ex.getMessage().lastIndexOf(' '));
+
+        return ResponseEntity.badRequest().body(message);
+    }
+
+    @ExceptionHandler(value = {EmptyResultDataAccessException.class})
+    protected ResponseEntity<Object> handleEmptyResultDataAccessException(RuntimeException ex) {
+        String message = "Unable to find object with id: " + ex.getMessage().substring(ex.getMessage().indexOf("id") + 2, ex.getMessage().lastIndexOf(' '));
 
         return ResponseEntity.badRequest().body(message);
     }

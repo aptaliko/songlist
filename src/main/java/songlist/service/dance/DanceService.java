@@ -1,15 +1,14 @@
 package songlist.service.dance;
 
 import org.springframework.stereotype.Service;
+import songlist.exceptions.ValidationException;
 import songlist.model.features.dance.Dance;
 import songlist.model.features.dance.dto.DanceDTO;
 import songlist.model.features.dance.dto.NewDanceDTO;
-import songlist.model.song.Song;
 import songlist.repository.dance.DanceRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -36,14 +35,26 @@ public class DanceService {
         return new DanceDTO(dance.getId().toString(), dance.getName());
     }
 
-    public Optional<UUID> create(NewDanceDTO newDanceDTO) {
+    public String create(NewDanceDTO newDanceDTO) {
         Dance dance = new Dance();
         dance.setName(newDanceDTO.getName());
 
-        return Optional.of(danceRepository.save(dance).getId());
+        return danceRepository.save(dance).getId().toString();
     }
 
     public void delete(String id) {
         danceRepository.deleteById(UUID.fromString(id));
+    }
+
+    public String update(String id, NewDanceDTO newDanceDTO) throws ValidationException {
+        Optional<Dance> dance = danceRepository.findById(UUID.fromString(id));
+
+        if (dance.isEmpty()) {
+            throw new ValidationException("No dance with id: " + id);
+        }
+        Dance d = dance.get();
+        d.setName(newDanceDTO.getName());
+
+        return danceRepository.save(d).getId().toString();
     }
 }
