@@ -1,4 +1,4 @@
-package songlist.repository.rhythm;
+package songlist.repository.features.rhythm;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

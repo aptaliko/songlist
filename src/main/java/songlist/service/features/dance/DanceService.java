@@ -1,11 +1,11 @@
-package songlist.service.dance;
+package songlist.service.features.dance;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.dance.Dance;
 import songlist.model.features.dance.dto.DanceDTO;
 import songlist.model.features.dance.dto.NewDanceDTO;
-import songlist.repository.dance.DanceRepository;
+import songlist.repository.features.dance.DanceRepository;
 
 import java.util.List;
 import java.util.Optional;

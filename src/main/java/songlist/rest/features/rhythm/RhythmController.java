@@ -1,4 +1,4 @@
-package songlist.rest.rhythm;
+package songlist.rest.features.rhythm;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.rhythm.dto.NewRhythmDTO;
 import songlist.model.features.rhythm.dto.RhythmDTO;
-import songlist.service.rhythm.RhythmService;
+import songlist.service.features.rhythm.RhythmService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

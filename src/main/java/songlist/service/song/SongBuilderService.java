@@ -7,9 +7,9 @@ import songlist.model.features.mode.Mode;
 import songlist.model.features.rhythm.Rhythm;
 import songlist.model.song.Song;
 import songlist.model.song.dto.NewSongDTO;
-import songlist.service.dance.DanceService;
-import songlist.service.mode.ModeService;
-import songlist.service.rhythm.RhythmService;
+import songlist.service.features.dance.DanceService;
+import songlist.service.features.mode.ModeService;
+import songlist.service.features.rhythm.RhythmService;
 
 import java.util.Optional;
 

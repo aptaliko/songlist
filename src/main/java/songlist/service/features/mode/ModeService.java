@@ -1,11 +1,11 @@
-package songlist.service.mode;
+package songlist.service.features.mode;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.mode.Mode;
 import songlist.model.features.mode.dto.ModeDTO;
 import songlist.model.features.mode.dto.NewModeDTO;
-import songlist.repository.mode.ModeRepository;
+import songlist.repository.features.mode.ModeRepository;
 
 import java.util.List;
 import java.util.Optional;
