@@ -3,6 +3,7 @@ package songlist.service.song;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
+import songlist.filters.SongWithRegion;
 import songlist.mappers.SongMapper;
 import songlist.model.song.Song;
 import songlist.model.song.dto.NewSongDTO;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static songlist.utils.Constants.DOES_NOT_EXIST;
 
 @Service
 public class SongService {
@@ -37,7 +40,8 @@ public class SongService {
         Specification<Song> activeSongs = Specification
                 .where(new SongWithRhythm(criteria.getRhythmId()))
                 .and(new SongWithDance(criteria.getDanceId()))
-                .and(new SongWithMode(criteria.getModeId()));
+                .and(new SongWithMode(criteria.getModeId()))
+                .and(new SongWithRegion(criteria.getRegionId()));
 
         return songRepository.findAll(activeSongs).stream().map(SongMapper::toSongDTO).collect(Collectors.toList());
     }
@@ -63,7 +67,7 @@ public class SongService {
         Optional<Song> song = songRepository.findById(UUID.fromString(id));
 
         if (song.isEmpty()) {
-            throw new ValidationException("No song with id: " + id);
+            throw new ValidationException("Song with id: " + id + DOES_NOT_EXIST);
         }
         Song s = song.get();
         songBuilderService.validateAndBuild(s, newSongDTO);

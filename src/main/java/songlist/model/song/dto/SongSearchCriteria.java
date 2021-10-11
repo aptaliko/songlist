@@ -8,5 +8,6 @@ public class SongSearchCriteria {
     private String rhythmId;
     private String danceId;
     private String modeId;
+    private String regionId;
 
 }

@@ -1,6 +1,5 @@
 TODO LIST
-1. Create other characteristics
-   1. Region (3 levels)
+1. Implement criteria to get songs of all child ids
 2. Pagination at search endpoint
 
 SET UP THE DB

@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static songlist.utils.Constants.DOES_NOT_EXIST;
+
 @Service
 public class RhythmService {
 
@@ -30,20 +32,21 @@ public class RhythmService {
         return new RhythmDTO(rhythm.getId().toString(), rhythm.getName(), rhythm.getMeter());
     }
 
-    public Optional<Rhythm> get(String id) {
-        return rhythmRepository.findById(UUID.fromString(id));
+    public Rhythm get(String id) throws ValidationException {
+        Optional<Rhythm> rhythm = rhythmRepository.findById(UUID.fromString(id));
+
+        if (rhythm.isEmpty()) {
+            throw new ValidationException("Rhythm with id" + id + DOES_NOT_EXIST);
+        }
+        return rhythm.get();
     }
 
-    public Optional<UUID> create(NewRhythmDTO newRhythmDTO) {
+    public String create(NewRhythmDTO newRhythmDTO) {
         Rhythm rhythm = new Rhythm();
         rhythm.setName(newRhythmDTO.getName());
         rhythm.setMeter(newRhythmDTO.getMeter());
 
-        return Optional.of(rhythmRepository.save(rhythm).getId());
-    }
-
-    public void delete(String id) {
-        rhythmRepository.deleteById(UUID.fromString(id));
+        return rhythmRepository.save(rhythm).getId().toString();
     }
 
     public String update(String id, NewRhythmDTO newRhythmDTO) throws ValidationException {
@@ -57,5 +60,9 @@ public class RhythmService {
         r.setMeter(newRhythmDTO.getMeter());
 
         return rhythmRepository.save(r).getId().toString();
+    }
+
+    public void delete(String id) {
+        rhythmRepository.deleteById(UUID.fromString(id));
     }
 }

@@ -39,11 +39,6 @@ public class DanceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(danceService.create(newDanceDTO));
     }
 
-    @DeleteMapping(value = "/{id}")
-    public void deleteDance(@PathVariable String id) {
-        danceService.delete(id);
-    }
-
     @PutMapping(value = "/{id}")
     public ResponseEntity<String> updateDance(@PathVariable String id, @Valid @NotNull @RequestBody NewDanceDTO newDanceDTO) {
         try {
@@ -51,5 +46,10 @@ public class DanceController {
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteDance(@PathVariable String id) {
+        danceService.delete(id);
     }
 }

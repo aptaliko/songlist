@@ -12,7 +12,6 @@ import songlist.service.features.ModeService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/modes")
@@ -36,13 +35,8 @@ public class ModeController {
     }
 
     @PostMapping()
-    public ResponseEntity<UUID> createMode(@Valid @NotNull @RequestBody NewModeDTO newModeDTO) {
-        return ResponseEntity.of(modeService.create(newModeDTO));
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public void deleteMode(@PathVariable String id) {
-        modeService.delete(id);
+    public ResponseEntity<String> createMode(@Valid @NotNull @RequestBody NewModeDTO newModeDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(modeService.create(newModeDTO));
     }
 
     @PutMapping(value = "/{id}")
@@ -53,4 +47,10 @@ public class ModeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteMode(@PathVariable String id) {
+        modeService.delete(id);
+    }
+
 }

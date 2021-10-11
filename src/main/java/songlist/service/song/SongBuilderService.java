@@ -2,16 +2,14 @@ package songlist.service.song;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
-import songlist.model.features.dance.Dance;
-import songlist.model.features.mode.Mode;
-import songlist.model.features.rhythm.Rhythm;
 import songlist.model.song.Song;
 import songlist.model.song.dto.NewSongDTO;
 import songlist.service.features.DanceService;
 import songlist.service.features.ModeService;
+import songlist.service.features.RegionService;
 import songlist.service.features.RhythmService;
 
-import java.util.Optional;
+import static songlist.utils.Utils.isNotNullOrEmpty;
 
 @Service
 public class SongBuilderService {
@@ -19,13 +17,14 @@ public class SongBuilderService {
     RhythmService rhythmService;
     DanceService danceService;
     ModeService modeService;
+    RegionService regionService;
 
-    private static final String DOES_NOT_EXIST = " does not exist.";
 
-    public SongBuilderService(RhythmService rhythmService, DanceService danceService, ModeService modeService) {
+    public SongBuilderService(RhythmService rhythmService, DanceService danceService, ModeService modeService, RegionService regionService) {
         this.rhythmService = rhythmService;
         this.danceService = danceService;
         this.modeService = modeService;
+        this.regionService = regionService;
     }
 
     public void validateAndBuild(Song song, NewSongDTO newSongDTO) throws ValidationException {
@@ -33,31 +32,19 @@ public class SongBuilderService {
         song.setComments(newSongDTO.getComments());
 
         if (isNotNullOrEmpty(newSongDTO.getRhythmId())) {
-            Optional<Rhythm> rhythm = rhythmService.get(newSongDTO.getRhythmId());
-            if (rhythm.isEmpty()) {
-                throw new ValidationException("Rhythm with id" + newSongDTO.getRhythmId() + DOES_NOT_EXIST);
-            }
-            song.setRhythm(rhythm.get());
+            song.setRhythm(rhythmService.get(newSongDTO.getRhythmId()));
         }
 
         if (isNotNullOrEmpty(newSongDTO.getDanceId())) {
-            Optional<Dance> dance = danceService.get(newSongDTO.getDanceId());
-            if (dance.isEmpty()) {
-                throw new ValidationException("Dance with id" + newSongDTO.getDanceId() + DOES_NOT_EXIST);
-            }
-            song.setDance(dance.get());
+            song.setDance(danceService.get(newSongDTO.getDanceId()));
         }
 
         if (isNotNullOrEmpty(newSongDTO.getModeId())) {
-            Optional<Mode> mode = modeService.get(newSongDTO.getModeId());
-            if (mode.isEmpty()) {
-                throw new ValidationException("Mode with id" + newSongDTO.getModeId() + DOES_NOT_EXIST);
-            }
-            song.setMode(mode.get());
+            song.setMode(modeService.get(newSongDTO.getModeId()));
         }
-    }
 
-    private static boolean isNotNullOrEmpty(String s) {
-        return s != null && !s.isBlank();
+        if (isNotNullOrEmpty(newSongDTO.getRegionId())) {
+            song.setRegion(regionService.get(newSongDTO.getRegionId()));
+        }
     }
 }

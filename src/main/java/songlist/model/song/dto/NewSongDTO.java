@@ -19,6 +19,8 @@ public class NewSongDTO {
 
     private String modeId;
 
+    private String regionId;
+
     @Size(max = 150)
     private String comments;
 

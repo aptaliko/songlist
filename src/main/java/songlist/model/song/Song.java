@@ -2,6 +2,7 @@ package songlist.model.song;
 
 import songlist.model.features.dance.Dance;
 import songlist.model.features.mode.Mode;
+import songlist.model.features.region.Region;
 import songlist.model.features.rhythm.Rhythm;
 
 import javax.persistence.*;
@@ -29,6 +30,10 @@ public class Song {
     @ManyToOne
     @JoinColumn(name="mode_id")
     private Mode mode;
+
+    @ManyToOne
+    @JoinColumn(name="region_id")
+    private Region region;
 
     @Column
     private String comments;
@@ -71,6 +76,14 @@ public class Song {
 
     public void setMode(Mode mode) {
         this.mode = mode;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     public String getComments() {

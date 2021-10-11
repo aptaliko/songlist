@@ -12,6 +12,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static songlist.utils.Constants.DOES_NOT_EXIST;
+
 @Service
 public class ModeService {
 
@@ -25,8 +27,13 @@ public class ModeService {
         return modeRepository.findAll().stream().map(s -> new ModeDTO(s.getId().toString(), s.getName())).collect(Collectors.toList());
     }
 
-    public Optional<Mode> get(String id) {
-        return modeRepository.findById(UUID.fromString(id));
+    public Mode get(String id) throws ValidationException {
+        Optional<Mode> mode = modeRepository.findById(UUID.fromString(id));
+
+        if (mode.isEmpty()) {
+            throw new ValidationException("Mode with id" + id + DOES_NOT_EXIST);
+        }
+        return mode.get();
     }
 
     public ModeDTO getDTO(String id) {
@@ -35,15 +42,11 @@ public class ModeService {
         return new ModeDTO(mode.getId().toString(), mode.getName());
     }
 
-    public Optional<UUID> create(NewModeDTO newModeDTO) {
+    public String create(NewModeDTO newModeDTO) {
         Mode mode = new Mode();
         mode.setName(newModeDTO.getName());
 
-        return Optional.of(modeRepository.save(mode).getId());
-    }
-
-    public void delete(String id) {
-        modeRepository.deleteById(UUID.fromString(id));
+        return modeRepository.save(mode).getId().toString();
     }
 
     public String update(String id, NewModeDTO newModeDTO) throws ValidationException {
@@ -56,5 +59,9 @@ public class ModeService {
         m.setName(newModeDTO.getName());
 
         return modeRepository.save(m).getId().toString();
+    }
+
+    public void delete(String id) {
+        modeRepository.deleteById(UUID.fromString(id));
     }
 }

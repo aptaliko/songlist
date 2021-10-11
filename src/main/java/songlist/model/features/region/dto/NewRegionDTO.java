@@ -1,21 +1,21 @@
-package songlist.model.features.rhythm.dto;
+package songlist.model.features.region.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class NewRhythmDTO {
+public class NewRegionDTO {
 
     @NotNull
     @NotBlank
     private String name;
 
-    private String meter;
+    private String parentRegionId;
 
     public String getName() {
         return name;
     }
 
-    public String getMeter() {
-        return meter;
+    public String getParentRegionId() {
+        return parentRegionId;
     }
 }

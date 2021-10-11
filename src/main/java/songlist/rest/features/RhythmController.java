@@ -12,7 +12,6 @@ import songlist.service.features.RhythmService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/rhythms")
@@ -36,13 +35,8 @@ public class RhythmController {
     }
 
     @PostMapping()
-    public ResponseEntity<UUID> createRhythm(@Valid @NotNull @RequestBody NewRhythmDTO newRhythmDTO) {
-        return ResponseEntity.of(rhythmService.create(newRhythmDTO));
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public void deleteSong(@PathVariable String id) {
-        rhythmService.delete(id);
+    public ResponseEntity<String> createRhythm(@Valid @NotNull @RequestBody NewRhythmDTO newRhythmDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(rhythmService.create(newRhythmDTO));
     }
 
     @PutMapping(value = "/{id}")
@@ -52,6 +46,11 @@ public class RhythmController {
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteSong(@PathVariable String id) {
+        rhythmService.delete(id);
     }
 
 }
