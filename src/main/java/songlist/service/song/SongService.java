@@ -13,10 +13,9 @@ import songlist.filters.SongWithDance;
 import songlist.filters.SongWithMode;
 import songlist.filters.SongWithRhythm;
 import songlist.repository.song.SongRepository;
+import songlist.service.features.RegionService;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static songlist.utils.Constants.DOES_NOT_EXIST;
@@ -26,10 +25,12 @@ public class SongService {
 
     SongRepository songRepository;
     SongBuilderService songBuilderService;
+    RegionService regionService;
 
-    public SongService(SongRepository songRepository, SongBuilderService songBuilderService) {
+    public SongService(SongRepository songRepository, SongBuilderService songBuilderService, RegionService regionService) {
         this.songRepository = songRepository;
         this.songBuilderService = songBuilderService;
+        this.regionService = regionService;
     }
 
     public List<SongDTO> getAll() {
@@ -41,7 +42,7 @@ public class SongService {
                 .where(new SongWithRhythm(criteria.getRhythmId()))
                 .and(new SongWithDance(criteria.getDanceId()))
                 .and(new SongWithMode(criteria.getModeId()))
-                .and(new SongWithRegion(criteria.getRegionId()));
+                .and(new SongWithRegion(regionService.getAllChildrenRegionIds(criteria.getRegionId())));
 
         return songRepository.findAll(activeSongs).stream().map(SongMapper::toSongDTO).collect(Collectors.toList());
     }
@@ -74,5 +75,7 @@ public class SongService {
 
         return songRepository.save(s).getId().toString();
     }
+
+
 }
 

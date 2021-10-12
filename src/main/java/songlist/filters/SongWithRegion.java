@@ -8,23 +8,24 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.Set;
 import java.util.UUID;
 
 public class SongWithRegion implements Specification<Song> {
 
-    private final String regionId;
+    private final Set<UUID> regionIds;
 
-    public SongWithRegion(String regionId) {
-        this.regionId = regionId;
+    public SongWithRegion(Set<UUID> regionIds) {
+        this.regionIds = regionIds;
     }
 
     @Override
     public Predicate toPredicate(@NotNull Root<Song> root, @NotNull CriteriaQuery<?> query, @NotNull CriteriaBuilder builder) {
-        if (this.regionId == null) {
+        if (this.regionIds.isEmpty()) {
             return builder.isTrue(builder.literal(true));
         }
         else {
-            return builder.equal(root.get("region").get("id"), UUID.fromString(this.regionId));
+            return builder.and(root.get("region").get("id").in(regionIds));
         }
     }
 }

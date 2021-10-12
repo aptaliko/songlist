@@ -4,6 +4,7 @@ import songlist.model.song.Song;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Stream;
 
 @Entity
 public class Region {
@@ -20,7 +21,7 @@ public class Region {
     @JoinColumn(name="parent_id")
     private Region parentRegion;
 
-    @OneToMany(mappedBy = "region")
+    @OneToMany(mappedBy = "parentRegion")
     private Set<Region> childRegions;
 
     @OneToMany(mappedBy = "region")
@@ -43,6 +44,12 @@ public class Region {
             return this.getName();
         }
         return this.getParentRegion().getFullRegionName() + ":" + this.getName();
+    }
+
+    public Stream<Region> flattened() {
+        return Stream.concat(
+                Stream.of(this),
+                this.getChildRegions().stream().flatMap(Region::flattened));
     }
 
     public void setName(String name) {

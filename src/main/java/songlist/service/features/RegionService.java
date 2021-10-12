@@ -1,5 +1,6 @@
 package songlist.service.features;
 
+import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.region.Region;
 import songlist.model.features.region.dto.NewRegionDTO;
@@ -8,12 +9,14 @@ import songlist.repository.features.RegionRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static songlist.utils.Constants.DOES_NOT_EXIST;
 import static songlist.utils.Utils.isNotNullOrEmpty;
 
+@Service
 public class RegionService {
 
     RegionRepository regionRepository;
@@ -62,6 +65,14 @@ public class RegionService {
         region.setName(dto.getName());
         if (isNotNullOrEmpty(dto.getParentRegionId())) {
             region.setParentRegion(get(dto.getParentRegionId()));
+        }
+    }
+
+    public Set<UUID> getAllChildrenRegionIds(String regionId) {
+        try {
+            return this.get(regionId).flattened().map(Region::getId).collect(Collectors.toSet());
+        } catch (ValidationException e) {
+            return Set.of();
         }
     }
 }

@@ -1,5 +1,5 @@
 TODO LIST
-1. Implement criteria to get songs of all child ids
+1. problem with fetch all periods
 2. Pagination at search endpoint
 
 SET UP THE DB
