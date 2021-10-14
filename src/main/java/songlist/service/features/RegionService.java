@@ -2,15 +2,14 @@ package songlist.service.features;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
+import songlist.mappers.SongMapper;
 import songlist.model.features.region.Region;
 import songlist.model.features.region.dto.NewRegionDTO;
 import songlist.model.features.region.dto.RegionDTO;
+import songlist.model.song.dto.SongDTO;
 import songlist.repository.features.RegionRepository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static songlist.utils.Constants.DOES_NOT_EXIST;
@@ -69,10 +68,21 @@ public class RegionService {
     }
 
     public Set<UUID> getAllChildrenRegionIds(String regionId) {
+        return getAllChildrenRegions(regionId).stream().map(Region::getId).collect(Collectors.toSet());
+    }
+
+    public Set<Region> getAllChildrenRegions(String regionId) {
         try {
-            return this.get(regionId).flattened().map(Region::getId).collect(Collectors.toSet());
+            return this.get(regionId).flattened().collect(Collectors.toSet());
         } catch (ValidationException e) {
             return Set.of();
         }
+    }
+
+    public List<SongDTO> getSongs(String id) {
+        List<SongDTO> songs = new ArrayList<>();
+        getAllChildrenRegions(id).forEach(region -> songs.addAll(region.getSongs().stream().map(SongMapper::toSongDTO).collect(Collectors.toList())));
+
+        return songs;
     }
 }

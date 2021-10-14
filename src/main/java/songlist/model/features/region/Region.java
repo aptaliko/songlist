@@ -36,7 +36,7 @@ public class Region {
     }
 
     public String getName() {
-        return this.getName();
+        return this.name;
     }
 
     public String getFullRegionName() {
@@ -70,9 +70,5 @@ public class Region {
 
     public Set<Song> getSongs() {
         return songs;
-    }
-
-    public void setSongs(Set<Song> songs) {
-        this.songs = songs;
     }
 }

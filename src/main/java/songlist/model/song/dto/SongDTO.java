@@ -10,5 +10,6 @@ public class SongDTO {
     private String rhythmName;
     private String danceName;
     private String modeName;
+    private String regionName;
     private String comments;
 }

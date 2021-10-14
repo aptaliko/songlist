@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.region.dto.NewRegionDTO;
 import songlist.model.features.region.dto.RegionDTO;
+import songlist.model.song.dto.SongDTO;
 import songlist.service.features.RegionService;
 
 import javax.validation.Valid;
@@ -55,6 +56,11 @@ public class RegionController {
     @DeleteMapping(value = "/{id}")
     public void deleteRegion(@PathVariable String id) {
         regionService.delete(id);
+    }
+
+    @GetMapping(value = "/{id}/songs")
+    public List<SongDTO> getSongs(@PathVariable String id) {
+        return regionService.getSongs(id);
     }
 
 }

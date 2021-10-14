@@ -21,6 +21,9 @@ public class SongMapper {
         if (song.getMode() != null) {
             dto.setModeName(song.getMode().getName());
         }
+        if (song.getRegion() != null) {
+            dto.setRegionName(song.getRegion().getFullRegionName());
+        }
 
         return dto;
     }
