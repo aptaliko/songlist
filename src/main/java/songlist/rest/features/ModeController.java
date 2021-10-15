@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.mode.dto.ModeDTO;
 import songlist.model.features.mode.dto.NewModeDTO;
+import songlist.model.song.dto.SongDTO;
 import songlist.service.features.ModeService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/modes")
@@ -53,4 +55,8 @@ public class ModeController {
         modeService.delete(id);
     }
 
+    @GetMapping(value = "/{id}/songs")
+    public Set<SongDTO> getSongs(@PathVariable String id) {
+        return modeService.getSongs(id);
+    }
 }

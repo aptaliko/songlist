@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.rhythm.dto.NewRhythmDTO;
 import songlist.model.features.rhythm.dto.RhythmDTO;
+import songlist.model.song.dto.SongDTO;
 import songlist.service.features.RhythmService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/rhythms")
@@ -53,4 +55,8 @@ public class RhythmController {
         rhythmService.delete(id);
     }
 
+    @GetMapping(value = "/{id}/songs")
+    public Set<SongDTO> getSongs(@PathVariable String id) {
+        return rhythmService.getSongs(id);
+    }
 }

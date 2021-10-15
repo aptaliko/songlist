@@ -40,4 +40,8 @@ public class Dance {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Set<Song> getSongs() {
+        return songs;
+    }
 }

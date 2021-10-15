@@ -2,14 +2,14 @@ package songlist.service.features;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
+import songlist.mappers.SongMapper;
 import songlist.model.features.rhythm.Rhythm;
 import songlist.model.features.rhythm.dto.NewRhythmDTO;
 import songlist.model.features.rhythm.dto.RhythmDTO;
+import songlist.model.song.dto.SongDTO;
 import songlist.repository.features.RhythmRepository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static songlist.utils.Constants.DOES_NOT_EXIST;
@@ -64,5 +64,13 @@ public class RhythmService {
 
     public void delete(String id) {
         rhythmRepository.deleteById(UUID.fromString(id));
+    }
+
+    public Set<SongDTO> getSongs(String id) {
+        try {
+            return this.get(id).getSongs().stream().map(SongMapper::toSongDTO).collect(Collectors.toSet());
+        } catch (ValidationException e) {
+            return Set.of();
+        }
     }
 }

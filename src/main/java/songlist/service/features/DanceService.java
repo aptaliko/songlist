@@ -2,13 +2,16 @@ package songlist.service.features;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
+import songlist.mappers.SongMapper;
 import songlist.model.features.dance.Dance;
 import songlist.model.features.dance.dto.DanceDTO;
 import songlist.model.features.dance.dto.NewDanceDTO;
+import songlist.model.song.dto.SongDTO;
 import songlist.repository.features.DanceRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -63,5 +66,13 @@ public class DanceService {
 
     public void delete(String id) {
         danceRepository.deleteById(UUID.fromString(id));
+    }
+
+    public Set<SongDTO> getSongs(String id) {
+        try {
+            return this.get(id).getSongs().stream().map(SongMapper::toSongDTO).collect(Collectors.toSet());
+        } catch (ValidationException e) {
+            return Set.of();
+        }
     }
 }

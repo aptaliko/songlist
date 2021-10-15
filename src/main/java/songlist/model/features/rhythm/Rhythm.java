@@ -51,4 +51,8 @@ public class Rhythm {
     public void setMeter(String meter) {
         this.meter = meter;
     }
+
+    public Set<Song> getSongs() {
+        return songs;
+    }
 }

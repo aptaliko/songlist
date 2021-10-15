@@ -1,6 +1,5 @@
 TODO LIST
-1. add getSongs functions in all features
-2. Pagination at search endpoint
+1. Pagination at search endpoint
 
 SET UP THE DB
 

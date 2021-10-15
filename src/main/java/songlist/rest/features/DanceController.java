@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.dance.dto.DanceDTO;
 import songlist.model.features.dance.dto.NewDanceDTO;
+import songlist.model.song.dto.SongDTO;
 import songlist.service.features.DanceService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/dances")
@@ -51,5 +53,10 @@ public class DanceController {
     @DeleteMapping(value = "/{id}")
     public void deleteDance(@PathVariable String id) {
         danceService.delete(id);
+    }
+
+    @GetMapping(value = "/{id}/songs")
+    public Set<SongDTO> getSongs(@PathVariable String id) {
+        return danceService.getSongs(id);
     }
 }
