@@ -36,7 +36,7 @@ public class RhythmService {
         Optional<Rhythm> rhythm = rhythmRepository.findById(UUID.fromString(id));
 
         if (rhythm.isEmpty()) {
-            throw new ValidationException("Rhythm with id" + id + DOES_NOT_EXIST);
+            throw new ValidationException("Rhythm with id : " + id + DOES_NOT_EXIST);
         }
         return rhythm.get();
     }
