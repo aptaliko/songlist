@@ -38,7 +38,8 @@ public class RegionService {
     }
 
     public RegionDTO getDTO(String id) {
-        Region region = regionRepository.getOne(UUID.fromString(id));
+        Region region = regionRepository.findById(UUID.fromString(id)).orElseThrow(
+            NoSuchElementException::new);
         return new RegionDTO(region.getId().toString(), region.getFullRegionName());
     }
 

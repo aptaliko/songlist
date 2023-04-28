@@ -28,7 +28,8 @@ public class RhythmService {
     }
 
     public RhythmDTO getDTO(String id) {
-        Rhythm rhythm = rhythmRepository.getOne(UUID.fromString(id));
+        Rhythm rhythm = rhythmRepository.findById(UUID.fromString(id)).orElseThrow(
+            NoSuchElementException::new);
         return new RhythmDTO(rhythm.getId().toString(), rhythm.getName(), rhythm.getMeter());
     }
 

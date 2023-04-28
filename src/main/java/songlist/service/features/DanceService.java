@@ -1,5 +1,6 @@
 package songlist.service.features;
 
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
 import songlist.mappers.SongMapper;
@@ -40,7 +41,8 @@ public class DanceService {
     }
 
     public DanceDTO getDTO(String id) {
-        Dance dance = danceRepository.getOne(UUID.fromString(id));
+        Dance dance = danceRepository.findById(UUID.fromString(id)).orElseThrow(
+            NoSuchElementException::new);
 
         return new DanceDTO(dance.getId().toString(), dance.getName());
     }

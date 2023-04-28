@@ -1,5 +1,6 @@
 package songlist.service.features;
 
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
 import songlist.mappers.SongMapper;
@@ -40,7 +41,8 @@ public class ModeService {
     }
 
     public ModeDTO getDTO(String id) {
-        Mode mode = modeRepository.getOne(UUID.fromString(id));
+        Mode mode = modeRepository.findById(UUID.fromString(id)).orElseThrow(
+            NoSuchElementException::new);
 
         return new ModeDTO(mode.getId().toString(), mode.getName());
     }
