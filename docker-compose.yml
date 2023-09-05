@@ -1,7 +1,7 @@
 services:
   spring-boot-app:
     build:
-      context: .
+      context: ../../Desktop
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
