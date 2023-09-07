@@ -1,5 +1,6 @@
 package songlist.rest.song;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -8,6 +9,7 @@ import songlist.exceptions.ValidationException;
 import songlist.model.song.dto.NewSongDTO;
 import songlist.model.song.dto.SongDTO;
 import songlist.model.song.dto.SongSearchCriteria;
+import songlist.service.metrics.CustomMetricService;
 import songlist.service.song.SongService;
 
 import javax.validation.Valid;
@@ -17,13 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/songs")
 @Validated
+@RequiredArgsConstructor
 public class SongController {
 
-    SongService songService;
+    final SongService songService;
 
-    public SongController(SongService songService) {
-        this.songService = songService;
-    }
+    final CustomMetricService customMetricService;
 
     @GetMapping(value = "/")
     public List<SongDTO> getAllSongs() {
@@ -32,6 +33,7 @@ public class SongController {
 
     @PostMapping(value = "/search")
     public List<SongDTO> getSongsBasedOnCriteria(@RequestBody SongSearchCriteria criteria) {
+        customMetricService.incrementEndpointCallCounter();
         return songService.getSongsOfCriteria(criteria);
     }
 

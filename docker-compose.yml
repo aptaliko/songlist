@@ -1,7 +1,7 @@
 services:
   spring-boot-app:
     build:
-      context: ../../Desktop
+      context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
@@ -13,6 +13,16 @@ services:
       SPRING_DATASOURCE_PASSWORD: mysecretpassword
     networks:
       - songlist-network
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - songlist-network
+    depends_on:
+      - spring-boot-app
   postgres-db:
     image: postgres
     restart: always
