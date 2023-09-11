@@ -35,7 +35,7 @@ public class SongService {
         this.regionService = regionService;
     }
 
-    public List<SongDTO> getAll() {
+    public List<SongDTO> getAllSongs() {
         return songRepository.findAll().stream().map(SongMapper::toSongDTO).collect(Collectors.toList());
     }
 

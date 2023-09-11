@@ -27,25 +27,27 @@ public class SongController {
     final CustomMetricService customMetricService;
 
     @GetMapping(value = "/")
-    public List<SongDTO> getAllSongs() {
-        return songService.getAll();
+    public ResponseEntity<List<SongDTO>> getAllSongs() {
+        return ResponseEntity.ok(songService.getAllSongs());
     }
 
     @PostMapping(value = "/search")
-    public List<SongDTO> getSongsBasedOnCriteria(@RequestBody SongSearchCriteria criteria) {
+    public ResponseEntity<List<SongDTO>> getSongsBasedOnCriteria(@RequestBody SongSearchCriteria criteria) {
         customMetricService.incrementEndpointCallCounter();
-        return songService.getSongsOfCriteria(criteria);
+        return ResponseEntity.ok(songService.getSongsOfCriteria(criteria));
     }
 
     @GetMapping(value = "/{id}")
-    public SongDTO getSong(@PathVariable String id) {
-        return songService.getDTO(id);
+    public ResponseEntity<SongDTO> getSong(@PathVariable String id) {
+        return ResponseEntity.ok(songService.getDTO(id));
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value= HttpStatus.ACCEPTED)
-    public void deleteSong(@PathVariable String id) {
+    public ResponseEntity<Void> deleteSong(@PathVariable String id) {
         songService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping(value = "/")
