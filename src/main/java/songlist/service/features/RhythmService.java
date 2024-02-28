@@ -2,12 +2,12 @@ package songlist.service.features;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
-import songlist.mappers.SongMapper;
+import songlist.mappers.entity.SongMapper;
 import songlist.model.features.rhythm.Rhythm;
 import songlist.model.features.rhythm.dto.NewRhythmDTO;
 import songlist.model.features.rhythm.dto.RhythmDTO;
 import songlist.model.song.dto.SongDTO;
-import songlist.repository.features.RhythmRepository;
+import songlist.repository.impl.sql.RhythmRepositoryImpl;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,9 +17,9 @@ import static songlist.utils.Constants.DOES_NOT_EXIST;
 @Service
 public class RhythmService {
 
-    RhythmRepository rhythmRepository;
+    RhythmRepositoryImpl rhythmRepository;
 
-    public RhythmService(RhythmRepository rhythmRepository) {
+    public RhythmService(RhythmRepositoryImpl rhythmRepository) {
         this.rhythmRepository = rhythmRepository;
     }
 

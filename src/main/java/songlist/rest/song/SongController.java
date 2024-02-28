@@ -38,8 +38,8 @@ public class SongController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<SongDTO> getSong(@PathVariable String id) {
-        return ResponseEntity.ok(songService.getDTO(id));
+    public SongDTO getSong(@PathVariable String id) {
+        return songService.getDTO(id);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -53,7 +53,8 @@ public class SongController {
     @PostMapping(value = "/")
     public ResponseEntity<String> createSong(@Valid @NotNull @RequestBody NewSongDTO newSongDTO) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(songService.create(newSongDTO));
+            songService.create(newSongDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

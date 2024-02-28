@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import songlist.exceptions.ValidationException;
 import songlist.model.features.dance.dto.DanceDTO;
-import songlist.model.features.dance.dto.NewDanceDTO;
+import songlist.model.features.dance.dto.DanceInput;
 import songlist.model.song.dto.SongDTO;
 import songlist.service.features.DanceService;
 
@@ -37,14 +37,16 @@ public class DanceController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> createDance(@Valid @NotNull @RequestBody NewDanceDTO newDanceDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(danceService.create(newDanceDTO));
+    public ResponseEntity<Void> createDance(@Valid @NotNull @RequestBody DanceInput danceInput) {
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<String> updateDance(@PathVariable String id, @Valid @NotNull @RequestBody NewDanceDTO newDanceDTO) {
+    public ResponseEntity<?> updateDance(@PathVariable String id, @Valid @NotNull @RequestBody
+    DanceInput danceInput) {
         try {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(danceService.update(id, newDanceDTO));
+            danceService.update(id, danceInput);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -57,6 +59,8 @@ public class DanceController {
 
     @GetMapping(value = "/{id}/songs")
     public Set<SongDTO> getSongs(@PathVariable String id) {
-        return danceService.getSongs(id);
+//        return danceService.getSongs(id);
+        //TODO
+        return null;
     }
 }

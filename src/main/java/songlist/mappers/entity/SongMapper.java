@@ -1,7 +1,8 @@
-package songlist.mappers;
+package songlist.mappers.entity;
 
 import songlist.model.song.Song;
 import songlist.model.song.dto.SongDTO;
+
 
 public class SongMapper {
 

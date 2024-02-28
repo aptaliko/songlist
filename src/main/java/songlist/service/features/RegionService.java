@@ -2,12 +2,12 @@ package songlist.service.features;
 
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
-import songlist.mappers.SongMapper;
+import songlist.mappers.entity.SongMapper;
 import songlist.model.features.region.Region;
 import songlist.model.features.region.dto.NewRegionDTO;
 import songlist.model.features.region.dto.RegionDTO;
 import songlist.model.song.dto.SongDTO;
-import songlist.repository.features.RegionRepository;
+import songlist.repository.impl.sql.RegionRepositoryImpl;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,9 +18,9 @@ import static songlist.utils.Utils.isNotNullOrEmpty;
 @Service
 public class RegionService {
 
-    RegionRepository regionRepository;
+    RegionRepositoryImpl regionRepository;
 
-    public RegionService(RegionRepository regionRepository) {
+    public RegionService(RegionRepositoryImpl regionRepository) {
         this.regionRepository = regionRepository;
     }
 

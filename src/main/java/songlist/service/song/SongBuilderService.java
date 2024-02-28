@@ -1,5 +1,6 @@
 package songlist.service.song;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
 import songlist.model.song.Song;
@@ -12,6 +13,7 @@ import songlist.service.features.RhythmService;
 import static songlist.utils.Utils.isNotNullOrEmpty;
 
 @Service
+@RequiredArgsConstructor
 public class SongBuilderService {
 
     RhythmService rhythmService;
@@ -19,12 +21,6 @@ public class SongBuilderService {
     ModeService modeService;
     RegionService regionService;
 
-    public SongBuilderService(RhythmService rhythmService, DanceService danceService, ModeService modeService, RegionService regionService) {
-        this.rhythmService = rhythmService;
-        this.danceService = danceService;
-        this.modeService = modeService;
-        this.regionService = regionService;
-    }
 
     public void validateAndBuild(Song song, NewSongDTO newSongDTO) throws ValidationException {
         song.setName(newSongDTO.getName());
@@ -34,9 +30,9 @@ public class SongBuilderService {
             song.setRhythm(rhythmService.get(newSongDTO.getRhythmId()));
         }
 
-        if (isNotNullOrEmpty(newSongDTO.getDanceId())) {
-            song.setDance(danceService.get(newSongDTO.getDanceId()));
-        }
+//        if (isNotNullOrEmpty(newSongDTO.getDanceId())) {
+//            song.setDance(danceService.get(newSongDTO.getDanceId()));
+//        }
 
         if (isNotNullOrEmpty(newSongDTO.getModeId())) {
             song.setMode(modeService.get(newSongDTO.getModeId()));

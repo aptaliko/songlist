@@ -3,12 +3,12 @@ package songlist.service.features;
 import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 import songlist.exceptions.ValidationException;
-import songlist.mappers.SongMapper;
+import songlist.mappers.entity.SongMapper;
 import songlist.model.features.mode.Mode;
 import songlist.model.features.mode.dto.ModeDTO;
 import songlist.model.features.mode.dto.NewModeDTO;
 import songlist.model.song.dto.SongDTO;
-import songlist.repository.features.ModeRepository;
+import songlist.repository.impl.sql.ModeRepositoryImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +21,9 @@ import static songlist.utils.Constants.DOES_NOT_EXIST;
 @Service
 public class ModeService {
 
-    ModeRepository modeRepository;
+    ModeRepositoryImpl modeRepository;
 
-    public ModeService(ModeRepository modeRepository) {
+    public ModeService(ModeRepositoryImpl modeRepository) {
         this.modeRepository = modeRepository;
     }
 

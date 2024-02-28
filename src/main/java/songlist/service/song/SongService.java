@@ -14,22 +14,22 @@ import songlist.filters.SongWithDance;
 import songlist.filters.SongWithMode;
 import songlist.filters.SongWithRegion;
 import songlist.filters.SongWithRhythm;
-import songlist.mappers.SongMapper;
+import songlist.mappers.entity.SongMapper;
 import songlist.model.song.Song;
 import songlist.model.song.dto.NewSongDTO;
 import songlist.model.song.dto.SongDTO;
 import songlist.model.song.dto.SongSearchCriteria;
-import songlist.repository.song.SongRepository;
+import songlist.repository.impl.sql.SongRepositoryImpl;
 import songlist.service.features.RegionService;
 
 @Service
 public class SongService {
 
-    SongRepository songRepository;
+    SongRepositoryImpl songRepository;
     SongBuilderService songBuilderService;
     RegionService regionService;
 
-    public SongService(SongRepository songRepository, SongBuilderService songBuilderService, RegionService regionService) {
+    public SongService(SongRepositoryImpl songRepository, SongBuilderService songBuilderService, RegionService regionService) {
         this.songRepository = songRepository;
         this.songBuilderService = songBuilderService;
         this.regionService = regionService;
@@ -56,11 +56,8 @@ public class SongService {
         return SongMapper.toSongDTO(song);
     }
 
-    public String create(NewSongDTO newSongDTO) throws ValidationException {
-        Song song = new Song();
-        songBuilderService.validateAndBuild(song, newSongDTO);
-        
-        return songRepository.save(song).getId().toString();
+    public void create(NewSongDTO newSongDTO) throws ValidationException {
+        songRepository.saveSong(newSongDTO);
     }
 
     public void delete(String id) {
